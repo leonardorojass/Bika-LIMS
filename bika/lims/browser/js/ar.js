@@ -132,7 +132,7 @@ $(document).ready(function(){
 	// Show email message box when AR gets retracted/invalidated
 	$("#workflow-transition-retract_ar").click(workflow_transition_retract_ar);
 
-	// Update sample matrix when sample type changed in AnalysisRequestViewView
+	// Update samplecategory when sample type changed in AnalysisRequestViewView
 	// Must be only loaded in AnalysisRequestViewView:
 	//  /clients/<client_id>/<ar_id>
 	//  /clients/<client_id>/<ar_id>/base_view
