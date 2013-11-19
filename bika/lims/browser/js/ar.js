@@ -109,7 +109,7 @@ function populate_sampletype(title) {
                'Title': title},
 	    dataType: "json",
 	    success: function(data, textStatus, $XHR){
-	    	$('#SampleMatrix').val(data['SampleMatrixTitle']);
+	    	$('#SampleCategory').val(data['SampleCategoryTitle']);
 	    }
 	});
 }
@@ -145,8 +145,8 @@ $(document).ready(function(){
 		        	populate_sampletype(ui.item.value);
 		        }
 		    });
-			if ($("input[id='SampleMatrix']")) {
-				$("input[id='SampleMatrix']").attr('readonly', true);
+			if ($("input[id='SampleCategory']")) {
+				$("input[id='SampleCategory']").attr('readonly', true);
 			}
 		}
 	}

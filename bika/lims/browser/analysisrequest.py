@@ -529,6 +529,7 @@ class AnalysisRequestWorkflowAction(WorkflowAction):
         newar.setProfile(ar.getProfile())
         newar.setSamplingDate(ar.getSamplingDate())
         newar.setSampleType(ar.getSampleType())
+        newar.setSampleCategory(ar.getSampleCategory())
         newar.setSamplePoint(ar.getSamplePoint())
         newar.setSamplingDeviation(ar.getSamplingDeviation())
         newar.setSampleCondition(ar.getSampleCondition())
@@ -1099,10 +1100,14 @@ class AnalysisRequestAddView(AnalysisRequestViewView):
                     if template.getSamplePoint() else ''
                 st_title = template.getSampleType().Title() \
                     if template.getSampleType() else ''
+                sc_title = template.getSampleCategory().Title() \
+                    if template.getSampleCategory() else ''
                 sp_uid = template.getSamplePoint().UID() \
                     if template.getSamplePoint() else ''
                 st_uid = template.getSampleType().UID() \
                     if template.getSampleType() else ''
+                sc_uid = template.getSampleCategory().UID() \
+                    if template.getSampleCategory() else ''
                 profile = template.getAnalysisProfile()
                 Analyses = [{
                     'service_poc':bsc(UID=x['service_uid'])[0].getObject().getPointOfCapture(),
@@ -1119,6 +1124,8 @@ class AnalysisRequestAddView(AnalysisRequestViewView):
                     'SamplePoint_uid':sp_uid,
                     'SampleType':st_title,
                     'SampleType_uid':st_uid,
+                    'SampleCategory':sc_title,
+                    'SampleCategory_uid':sc_uid,
                     'Partitions':template.getPartitions(),
                     'Analyses':Analyses,
                     'ReportDryMatter':template.getReportDryMatter(),
@@ -1507,6 +1514,7 @@ class ajaxAnalysisRequestSubmit():
                 if ar.get('Sample', '') != '' and field in [
                     'SamplingDate',
                     'SampleType'
+                    'SampleCategory'
                 ]:
                     continue
                 if (field in ar and not ar.get(field, '')):
@@ -1555,6 +1563,7 @@ class ajaxAnalysisRequestSubmit():
                 saved_form = self.request.form
                 self.request.form = resolved_values
                 sample.setSampleType(resolved_values['SampleType'])
+                sample.setSampleCategory(resolved_values['SampleCategory'])
                 sample.processForm()
                 self.request.form = saved_form
                 if SamplingWorkflowEnabled:
@@ -1813,6 +1822,9 @@ class AnalysisRequestsView(BikaListingView):
             'getSampleTypeTitle': {'title': _('Sample Type'),
                                    'index': 'getSampleTypeTitle',
                                    'toggle': True},
+            'getSampleCategoryTitle': {'title': _('Sample Category'),
+                                   'index': 'getSampleCategoryTitle',
+                                   'toggle': True},
             'getSamplePointTitle': {'title': _('Sample Point'),
                                     'index': 'getSamplePointTitle',
                                     'toggle': False},
@@ -1881,6 +1893,7 @@ class AnalysisRequestsView(BikaListingView):
                         'getProfileTitle',
                         'getTemplateTitle',
                         'getSampleTypeTitle',
+                        'getSampleCategoryTitle',
                         'getSamplePointTitle',
                         'SamplingDeviation',
                         'AdHoc',
@@ -1920,6 +1933,7 @@ class AnalysisRequestsView(BikaListingView):
                         'getDatePreserved',
                         'getPreserver',
                         'getSampleTypeTitle',
+                        'getSampleCategoryTitle',
                         'getSamplePointTitle',
                         'SamplingDeviation',
                         'AdHoc',
@@ -1945,6 +1959,7 @@ class AnalysisRequestsView(BikaListingView):
                         'getClientSampleID',
                         'ClientContact',
                         'getSampleTypeTitle',
+                        'getSampleCategoryTitle',
                         'getSamplePointTitle',
                         'SamplingDeviation',
                         'AdHoc',
@@ -1976,6 +1991,7 @@ class AnalysisRequestsView(BikaListingView):
                         'getClientSampleID',
                         'ClientContact',
                         'getSampleTypeTitle',
+                        'getSampleCategoryTitle',
                         'getSamplePointTitle',
                         'SamplingDeviation',
                         'AdHoc',
@@ -2003,6 +2019,7 @@ class AnalysisRequestsView(BikaListingView):
                         'getClientSampleID',
                         'ClientContact',
                         'getSampleTypeTitle',
+                        'getSampleCategoryTitle',
                         'getSamplePointTitle',
                         'SamplingDeviation',
                         'AdHoc',
@@ -2030,6 +2047,7 @@ class AnalysisRequestsView(BikaListingView):
                         'getClientSampleID',
                         'ClientContact',
                         'getSampleTypeTitle',
+                        'getSampleCategoryTitle',
                         'getSamplePointTitle',
                         'SamplingDeviation',
                         'AdHoc',
@@ -2062,6 +2080,7 @@ class AnalysisRequestsView(BikaListingView):
                         'getClientSampleID',
                         'ClientContact',
                         'getSampleTypeTitle',
+                        'getSampleCategoryTitle',
                         'getSamplePointTitle',
                         'SamplingDeviation',
                         'AdHoc',
@@ -2091,6 +2110,7 @@ class AnalysisRequestsView(BikaListingView):
                         'getClientSampleID',
                         'ClientContact',
                         'getSampleTypeTitle',
+                        'getSampleCategoryTitle',
                         'getSamplePointTitle',
                         'SamplingDeviation',
                         'AdHoc',
@@ -2130,6 +2150,7 @@ class AnalysisRequestsView(BikaListingView):
                         'getClientSampleID',
                         'ClientContact',
                         'getSampleTypeTitle',
+                        'getSampleCategoryTitle',
                         'getSamplePointTitle',
                         'SamplingDeviation',
                         'AdHoc',
@@ -2170,6 +2191,7 @@ class AnalysisRequestsView(BikaListingView):
                         'getClientSampleID',
                         'ClientContact',
                         'getSampleTypeTitle',
+                        'getSampleCategoryTitle',
                         'getSamplePointTitle',
                         'SamplingDeviation',
                         'AdHoc',
@@ -2558,6 +2580,7 @@ class InvoiceView(BrowserView):
         self.clientReference = context.getClientReference()
         self.clientSampleId = sample.getClientSampleID()
         self.sampleType = sample.getSampleType().Title()
+        self.sampleCategory = sample.getSampleCategory().Title()
         self.samplePoint = samplePoint and samplePoint.Title()
         self.requestId = context.getRequestID()
         # Retrieve required data from analyses collection
@@ -2640,6 +2663,7 @@ class WidgetVisibility(_WV):
                 'Profile',
                 'SamplingDate',
                 'SampleType',
+                'SampleCategory',
                 'SamplePoint',
                 'ClientOrderNumber',
                 'ClientReference',
@@ -2684,6 +2708,7 @@ class WidgetVisibility(_WV):
                 'Sample',
                 'SamplePoint',
                 'SampleType',
+                'SampleCategory',
                 'Template',
             ]
         elif state in ('sample_received', ):
@@ -2709,6 +2734,7 @@ class WidgetVisibility(_WV):
                 'SampleCondition',
                 'SamplePoint',
                 'SampleType',
+                'SampleCategory',
                 'SamplingDate',
                 'SamplingDeviation',
                 'Template',
@@ -2735,6 +2761,7 @@ class WidgetVisibility(_WV):
                 'SampleCondition',
                 'SamplePoint',
                 'SampleType',
+                'SampleCategory',
                 'SamplingDate',
                 'SamplingDeviation',
                 'Template',
@@ -2758,6 +2785,7 @@ class WidgetVisibility(_WV):
                 'SampleCondition',
                 'SamplePoint',
                 'SampleType',
+                'SampleCategory',
                 'SamplingDate',
                 'SamplingDeviation',
                 'Template',

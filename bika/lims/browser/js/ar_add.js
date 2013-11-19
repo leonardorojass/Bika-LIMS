@@ -113,6 +113,28 @@ function ar_referencewidget_lookups(elements){
 				element.attr('search_query', search_query);
 				ar_referencewidget_lookups(element);
 			}
+			if(fieldName == 'SampleCategory'){
+				element = $('#ar_'+column+'_SampleCategory');
+				element
+					.removeClass( "cg-autocomplete-input" )
+					.removeAttr( "autocomplete" )
+					.removeAttr( "role" )
+					.removeAttr( "aria-autocomplete" )
+					.removeAttr( "aria-haspopup" );
+				new_element = $(element[0]).clone();
+				parent = $(element).parent();
+				$(element).remove();
+				$(parent).append(new_element);
+				element = $('#ar_'+column+'_SampleCategory');
+				// cut kwargs into the base_query
+				base_query = $(element).attr('base_query');
+				base_query = $.parseJSON(base_query);
+				base_query = $.toJSON(base_query);
+				search_query = {'getSampleCategoryTitle': ui.item[$(this).attr('ui_item')]};
+				search_query = $.toJSON(search_query);
+				element.attr('search_query', search_query);
+				ar_referencewidget_lookups(element);
+			}
 
 			// Selected a Profile
 			if(fieldName == 'Profile'){
@@ -728,10 +750,14 @@ function setTemplate(column,template_title){
 	st_uid = template_data['SampleType_uid'];
 	sp_title = template_data['SamplePoint'];
 	sp_uid = template_data['SamplePoint_uid'];
+	sc_title = template_data['SampleCategory'];
+	sc_uid = template_data['SampleCategory_uid'];
 	$('#ar_'+column+'_SampleType').val(st_title);
 	$('#ar_'+column+'_SampleType_uid').val(st_uid);
 	$('#ar_'+column+'_SamplePoint').val(sp_title);
 	$('#ar_'+column+'_SamplePoint_uid').val(sp_uid);
+	$('#ar_'+column+'_SampleCategory').val(sc_title);
+	$('#ar_'+column+'_SampleCategory_uid').val(sc_uid);
 
 	dm = template_data['ReportDryMatter'];
 	$('#ar_'+column+'_ReportDryMatter').prop('checked', dm);
