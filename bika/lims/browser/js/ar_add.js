@@ -70,72 +70,55 @@ function ar_referencewidget_lookups(elements){
 
 			// samplepoint <> sampletype relations
 			if(fieldName == 'SampleType'){
-				element = $('#ar_'+column+'_SamplePoint');
-				element
-					.removeClass( "cg-autocomplete-input" )
-					.removeAttr( "autocomplete" )
-					.removeAttr( "role" )
-					.removeAttr( "aria-autocomplete" )
-					.removeAttr( "aria-haspopup" );
-				new_element = $(element[0]).clone();
-				parent = $(element).parent();
-				$(element).remove();
-				$(parent).append(new_element);
-				element = $('#ar_'+column+'_SamplePoint');
-				// cut kwargs into the base_query
-				base_query = $(element).attr('base_query');
-				base_query = $.parseJSON(base_query);
-				base_query = $.toJSON(base_query);
-				search_query = {'getSampleTypeTitle': ui.item[$(this).attr('ui_item')]};
-				search_query = $.toJSON(search_query);
-				element.attr('search_query', search_query);
-				ar_referencewidget_lookups(element);
+				element_name='#ar_'+column+'_SamplePoint';
+                element = ar_change_search_query(
+                    this, element_name, 'getSampleTypeTitle');
+                //element = $('#ar_'+column+'_SamplePoint');
+                //element
+                //    .removeClass( "cg-autocomplete-input" )
+                //    .removeAttr( "autocomplete" )
+                //    .removeAttr( "role" )
+                //    .removeAttr( "aria-autocomplete" )
+                //    .removeAttr( "aria-haspopup" );
+                //new_element = $(element[0]).clone();
+                //parent = $(element).parent();
+                //$(element).remove();
+                //$(parent).append(new_element);
+                //element = $('#ar_'+column+'_SamplePoint');
+                //// cut kwargs into the base_query
+                //base_query = $(element).attr('base_query');
+                //base_query = $.parseJSON(base_query);
+                //base_query = $.toJSON(base_query);
+                //search_query = {'getSampleTypeTitle': ui.item[$(this).attr('ui_item')]};
+                //search_query = $.toJSON(search_query);
+                //element.attr('search_query', search_query);
+                //ar_referencewidget_lookups(element);
 			}
 			if(fieldName == 'SamplePoint'){
-				element = $('#ar_'+column+'_SampleType');
-				element
-					.removeClass( "cg-autocomplete-input" )
-					.removeAttr( "autocomplete" )
-					.removeAttr( "role" )
-					.removeAttr( "aria-autocomplete" )
-					.removeAttr( "aria-haspopup" );
-				new_element = $(element[0]).clone();
-				parent = $(element).parent();
-				$(element).remove();
-				$(parent).append(new_element);
-				element = $('#ar_'+column+'_SampleType');
-				// cut kwargs into the base_query
-				base_query = $(element).attr('base_query');
-				base_query = $.parseJSON(base_query);
-				base_query = $.toJSON(base_query);
-				search_query = {'getSamplePointTitle': ui.item[$(this).attr('ui_item')]};
-				search_query = $.toJSON(search_query);
-				element.attr('search_query', search_query);
-				ar_referencewidget_lookups(element);
+				element_name='#ar_'+column+'_SampleType';
+                element = ar_change_search_query(
+                    this, element_name, 'getSamplePointTitle');
+				//element = $('#ar_'+column+'_SampleType');
+				//element
+				//	.removeClass( "cg-autocomplete-input" )
+				//	.removeAttr( "autocomplete" )
+				//	.removeAttr( "role" )
+				//	.removeAttr( "aria-autocomplete" )
+				//	.removeAttr( "aria-haspopup" );
+				//new_element = $(element[0]).clone();
+				//parent = $(element).parent();
+				//$(element).remove();
+				//$(parent).append(new_element);
+				//element = $('#ar_'+column+'_SampleType');
+				//// cut kwargs into the base_query
+				//base_query = $(element).attr('base_query');
+				//base_query = $.parseJSON(base_query);
+				//base_query = $.toJSON(base_query);
+				//search_query = {'getSamplePointTitle': ui.item[$(this).attr('ui_item')]};
+				//search_query = $.toJSON(search_query);
+				//element.attr('search_query', search_query);
+				//ar_referencewidget_lookups(element);
 			}
-			if(fieldName == 'SampleCategory'){
-				element = $('#ar_'+column+'_SampleCategory');
-				element
-					.removeClass( "cg-autocomplete-input" )
-					.removeAttr( "autocomplete" )
-					.removeAttr( "role" )
-					.removeAttr( "aria-autocomplete" )
-					.removeAttr( "aria-haspopup" );
-				new_element = $(element[0]).clone();
-				parent = $(element).parent();
-				$(element).remove();
-				$(parent).append(new_element);
-				element = $('#ar_'+column+'_SampleCategory');
-				// cut kwargs into the base_query
-				base_query = $(element).attr('base_query');
-				base_query = $.parseJSON(base_query);
-				base_query = $.toJSON(base_query);
-				search_query = {'getSampleCategoryTitle': ui.item[$(this).attr('ui_item')]};
-				search_query = $.toJSON(search_query);
-				element.attr('search_query', search_query);
-				ar_referencewidget_lookups(element);
-			}
-
 			// Selected a Profile
 			if(fieldName == 'Profile'){
 				unsetTemplate(column);
@@ -926,6 +909,30 @@ function applyComboFilter(element, filterkey, filtervalue) {
     $(element).combogrid(options);
     $(element).addClass("has_combogrid_widget");
     $(element).attr('search_query', '{}');
+}
+
+function ar_change_search_query(item, element_name, index) {
+    element = $(element_name);
+    element
+        .removeClass( "cg-autocomplete-input" )
+        .removeAttr( "autocomplete" )
+        .removeAttr( "role" )
+        .removeAttr( "aria-autocomplete" )
+        .removeAttr( "aria-haspopup" );
+    new_element = $(element[0]).clone();
+    parent = $(element).parent();
+    $(element).remove();
+    $(parent).append(new_element);
+    element = $(element_name);
+    // cut kwargs into the base_query
+    base_query = $(element).attr('base_query');
+    base_query = $.parseJSON(base_query);
+    base_query = $.toJSON(base_query);
+    search_query = {index: ui.item[$(item).attr('ui_item')]};
+    search_query = $.toJSON(search_query);
+    element.attr('search_query', search_query);
+    ar_referencewidget_lookups(element);
+    return element;
 }
 
 $(document).ready(function(){

@@ -201,12 +201,13 @@
 				                                               workflow_id='bika_worksheetanalysis_workflow',
 				                                               field_id='bika_worksheetanalysis_workflow',
 				                                               field_title='Worksheet state')"/>
+				        <tal:x content="structure context/@@selection_macros/select_samplecategory"/>
 				    </fieldset>
 				    <input tabindex=""
 				        class="searchButton allowMultiSubmit"
 				        type="submit"
 				        name="submit"
-				        value="Generate report"
+				        value="aaaaaaGenerate report"
 				        i18n:attributes="value"/>
 				</form>
 			</div>

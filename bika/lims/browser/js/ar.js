@@ -102,6 +102,7 @@ function workflow_transition_retract_ar(event) {
 }
 
 function populate_sampletype(title) {
+debugger;
 	$.ajax({
 		url: window.portal_url + "/getsampletypeinfo",
 		type: 'POST',
