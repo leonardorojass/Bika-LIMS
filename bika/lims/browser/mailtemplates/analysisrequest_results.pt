@@ -212,8 +212,8 @@
                                 analysis_accredited python:accredited and service.getAccredited();
                                 analysis_outofrange python:view.ResultOutOfRange(analysis);
                                 analysis_retested python:analysis.getRetested();
-                                analysis_specs python:analysis.getAnalysisSpecs();
-                                analysis_range python: analysis_specs and analysis_specs.getAnalysisSpecsStr(analysis_keyword) or '';
+                                spec python:analysis.specification if hasattr(analysis, 'specification') else {'min':'', 'max':'', 'error':''};
+                                analysis_range python: view.getAnalysisSpecsStr(spec) or '';
                                 analysis_remarks python: analysis.getRemarks() or '';
                                 analysis_css_result python:'outofrange' if analysis_outofrange else '';
                                 analysis_css_accredited python:'accredited' if analysis_accredited else '';
@@ -321,8 +321,8 @@
                                             dqc_refsample_code python:dqc_refsample.id;
                                             dqc_outofrange python: view.ResultOutOfRange(dqc_analysis);
                                             dqc_uncertainity python: dqc_analysis.getUncertainty();
-                                            dqc_specs python: None;
-                                            dqc_range python: dqc_specs and dqc_specs.getAnalysisSpecsStr(dqc_service.getKeyword()) or '';
+                                            dqc_specs python: {'min':'', 'max':'', 'error':''};
+                                            dqc_range python: dqc_specs and view.getAnalysisSpecsStr(dqc_specs) or '';
                                             dqc_worksheet python:dqc_analysis.getBackReferences('WorksheetAnalysis');
                                             dqc_wsid python:dqc_worksheet[0].id if (dqc_worksheet and len(dqc_worksheet) > 0) else '';
                                             dqc_wshref python:dqc_worksheet[0].absolute_url() if (dqc_worksheet and len(dqc_worksheet) > 0) else '';">

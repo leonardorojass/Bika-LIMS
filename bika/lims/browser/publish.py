@@ -51,15 +51,23 @@ class doPublish(BrowserView):
         adapters = getAdapters((analysis, ), IFieldIcons)
         bsc = getToolByName(self.context, "bika_setup_catalog")
         for name, adapter in adapters:
-            spec = {}
-            spec_uid = self.request.get("PublicationSpecification", None)
-            proxies = bsc(portal_type="AnalysisSpec", UID=spec_uid)
-            kw = analysis.getService().getKeyword()
-            spec = proxies[0].getObject().getResultsRangeDict().get(kw, None) \
-                if proxies else None
+            spec = analysis.specification \
+                if hasattr(analysis, "specification") else None
+            if not spec:
+                return False
             alerts = adapter(specification=spec)
             if alerts and analysis.UID() in alerts:
                 return True
+
+    def getAnalysisSpecsStr(self, spec):
+        specstr = ''
+        if spec['min'] and spec['max']:
+            specstr = '%s - %s' % (spec['min'], spec['max'])
+        elif spec['min']:
+            specstr = '> %s' % spec['min']
+        elif spec['max']:
+            specstr = '< %s' % spec['max']
+        return specstr
 
     def __call__(self):
 
