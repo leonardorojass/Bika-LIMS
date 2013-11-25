@@ -6,7 +6,7 @@ function toggle_spec_fields(element) {
 	// or remove the specification inputs.
 	if(!$("#bika_setup").attr("EnableARSpecs")) { return; }
 	var column = $(element).attr("column");
-	var root_name = $(element).attr("name");
+	var root_name = $(element).attr("name").replace(":ignore_empty", "");
 	var min_name   = root_name.replace("Analyses", "min");
 	var max_name   = root_name.replace("Analyses", "max");
 	var error_name = root_name.replace("Analyses", "error");

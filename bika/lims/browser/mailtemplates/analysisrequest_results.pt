@@ -19,7 +19,6 @@
       pub_pref view/pub_pref;
       accredited python:lab_accredited and view.any_accredited;
       global invoice_exclude python:False;
-      global out_of_range python:0;
       ar nocall:view/ar;
       dry ar/getReportDryMatter;
       remarksenabled python:view.context.bika_setup.getEnableAnalysisRemarks();">
@@ -210,10 +209,10 @@
                                 analysis_result_dm python: analysis.getResultDM();
                                 analysis_uncertainty analysis/getUncertainty|nothing;
                                 analysis_accredited python:accredited and service.getAccredited();
-                                analysis_outofrange python:view.ResultOutOfRange(analysis);
                                 analysis_retested python:analysis.getRetested();
                                 spec python:analysis.specification if hasattr(analysis, 'specification') else {'min':'', 'max':'', 'error':''};
                                 analysis_range python: view.getAnalysisSpecsStr(spec) or '';
+                                analysis_outofrange python:analysis.isOutOfRange(analysis.getResult(), {'min': spec.get('min', ''), 'max':, spec.get('max', ''), 'error': spec.get('error', '')})[0];
                                 analysis_remarks python: analysis.getRemarks() or '';
                                 analysis_css_result python:'outofrange' if analysis_outofrange else '';
                                 analysis_css_accredited python:'accredited' if analysis_accredited else '';

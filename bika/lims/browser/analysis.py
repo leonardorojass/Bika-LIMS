@@ -10,13 +10,24 @@ from zope.interface import implements
 
 def isOutOfShoulderRange(result, Min, Max, error):
     # check if in 'shoulder' range - out of range, but in acceptable error
-    spec_min = float(Min)
-    spec_max = float(Max)
-    error = 0
+    spec_min = None
+    spec_max = None
+    try:
+        result = float(result)
+    except:
+        return False, None
+    try:
+        spec_min = float(Min)
+    except:
+        spec_min = None
     try:
         error = float(error)
     except:
-        pass
+        error = 0
+    try:
+        spec_max = float(Max)
+    except:
+        spec_max = None
     error_amount = (result / 100) * error
     error_min = result - error_amount
     error_max = result + error_amount
@@ -31,15 +42,21 @@ def isOutOfRange(result, Min, Max, error):
     spec_min = None
     spec_max = None
     try:
+        result = float(result)
+    except:
+        return False, None
+    try:
         spec_min = float(Min)
     except:
         spec_min = None
-        pass
+    try:
+        error = float(error)
+    except:
+        error = 0
     try:
         spec_max = float(Max)
     except:
         spec_max = None
-        pass
     if (not spec_min and not spec_max):
         if isOutOfShoulderRange(result, Min, Max, error):
             return True, True
