@@ -70,54 +70,107 @@ function ar_referencewidget_lookups(elements){
 
 			// samplepoint <> sampletype relations
 			if(fieldName == 'SampleType'){
+                //SamplePoint
 				element_name='#ar_'+column+'_SamplePoint';
-                element = ar_change_search_query(
-                    this, element_name, 'getSampleTypeTitle');
-                //element = $('#ar_'+column+'_SamplePoint');
-                //element
-                //    .removeClass( "cg-autocomplete-input" )
-                //    .removeAttr( "autocomplete" )
-                //    .removeAttr( "role" )
-                //    .removeAttr( "aria-autocomplete" )
-                //    .removeAttr( "aria-haspopup" );
-                //new_element = $(element[0]).clone();
-                //parent = $(element).parent();
-                //$(element).remove();
-                //$(parent).append(new_element);
-                //element = $('#ar_'+column+'_SamplePoint');
-                //// cut kwargs into the base_query
-                //base_query = $(element).attr('base_query');
-                //base_query = $.parseJSON(base_query);
-                //base_query = $.toJSON(base_query);
-                //search_query = {'getSampleTypeTitle': ui.item[$(this).attr('ui_item')]};
-                //search_query = $.toJSON(search_query);
-                //element.attr('search_query', search_query);
-                //ar_referencewidget_lookups(element);
+                //element = ar_change_search_query(
+                //    this, element_name, 'getSampleTypeTitle');
+                element = $(element_name)
+                element
+                    .removeClass( "cg-autocomplete-input" )
+                    .removeAttr( "autocomplete" )
+                    .removeAttr( "role" )
+                    .removeAttr( "aria-autocomplete" )
+                    .removeAttr( "aria-haspopup" );
+                new_element = $(element[0]).clone();
+                parent = $(element).parent();
+                $(element).remove();
+                $(parent).append(new_element);
+                element = $(element_name)
+                // cut kwargs into the base_query
+                base_query = $(element).attr('base_query');
+                base_query = $.parseJSON(base_query);
+                base_query = $.toJSON(base_query);
+                search_query = {'getSampleTypeTitle': ui.item[$(this).attr('ui_item')]};
+                search_query = $.toJSON(search_query);
+                element.attr('search_query', search_query);
+                ar_referencewidget_lookups(element);
+
+                //SampleCategory
+				element_name='#ar_'+column+'_SampleCategory';
+                //element = ar_change_search_query(
+                //    this, element_name, 'getSampleTypeTitle');
+                element = $(element_name)
+                element
+                    .removeClass( "cg-autocomplete-input" )
+                    .removeAttr( "autocomplete" )
+                    .removeAttr( "role" )
+                    .removeAttr( "aria-autocomplete" )
+                    .removeAttr( "aria-haspopup" );
+                new_element = $(element[0]).clone();
+                parent = $(element).parent();
+                $(element).remove();
+                $(parent).append(new_element);
+                element = $(element_name)
+                // cut kwargs into the base_query
+                base_query = $(element).attr('base_query');
+                base_query = $.parseJSON(base_query);
+                base_query = $.toJSON(base_query);
+                search_query = {'getSampleTypeTitle': ui.item[$(this).attr('ui_item')]};
+                search_query = $.toJSON(search_query);
+                element.attr('search_query', search_query);
+                ar_referencewidget_lookups(element);
 			}
 			if(fieldName == 'SamplePoint'){
+                //Adjust SampleType
 				element_name='#ar_'+column+'_SampleType';
-                element = ar_change_search_query(
-                    this, element_name, 'getSamplePointTitle');
-				//element = $('#ar_'+column+'_SampleType');
-				//element
-				//	.removeClass( "cg-autocomplete-input" )
-				//	.removeAttr( "autocomplete" )
-				//	.removeAttr( "role" )
-				//	.removeAttr( "aria-autocomplete" )
-				//	.removeAttr( "aria-haspopup" );
-				//new_element = $(element[0]).clone();
-				//parent = $(element).parent();
-				//$(element).remove();
-				//$(parent).append(new_element);
-				//element = $('#ar_'+column+'_SampleType');
-				//// cut kwargs into the base_query
-				//base_query = $(element).attr('base_query');
-				//base_query = $.parseJSON(base_query);
-				//base_query = $.toJSON(base_query);
-				//search_query = {'getSamplePointTitle': ui.item[$(this).attr('ui_item')]};
-				//search_query = $.toJSON(search_query);
-				//element.attr('search_query', search_query);
-				//ar_referencewidget_lookups(element);
+                //element = ar_change_search_query(
+                //    this, element_name, 'getSamplePointTitle');
+                element = $(element_name)
+				element
+					.removeClass( "cg-autocomplete-input" )
+					.removeAttr( "autocomplete" )
+					.removeAttr( "role" )
+					.removeAttr( "aria-autocomplete" )
+					.removeAttr( "aria-haspopup" );
+				new_element = $(element[0]).clone();
+				parent = $(element).parent();
+				$(element).remove();
+				$(parent).append(new_element);
+                element = $(element_name)
+				// cut kwargs into the base_query
+				base_query = $(element).attr('base_query');
+				base_query = $.parseJSON(base_query);
+				base_query = $.toJSON(base_query);
+				search_query = {'getSamplePointTitle': ui.item[$(this).attr('ui_item')]};
+				search_query = $.toJSON(search_query);
+				element.attr('search_query', search_query);
+				ar_referencewidget_lookups(element);
+			}
+			if(fieldName == 'SampleCategory'){
+				element_name='#ar_'+column+'_SampleType';
+                //element = ar_change_search_query(
+                //    this, element_name, 'getSampleCategoriesTitle');
+				element = $(element_name);
+				element
+					.removeClass( "cg-autocomplete-input" )
+					.removeAttr( "autocomplete" )
+					.removeAttr( "role" )
+					.removeAttr( "aria-autocomplete" )
+					.removeAttr( "aria-haspopup" );
+				new_element = $(element[0]).clone();
+				parent = $(element).parent();
+				$(element).remove();
+				$(parent).append(new_element);
+				element = $(element_name);
+				// cut kwargs into the base_query
+				base_query = $(element).attr('base_query');
+				base_query = $.parseJSON(base_query);
+				base_query = $.toJSON(base_query);
+				cat = ui.item[$(this).attr('ui_item')];
+				search_query = {'getSampleCategoriesTitle': cat};
+				search_query = $.toJSON(search_query);
+				element.attr('search_query', search_query);
+				ar_referencewidget_lookups(element);
 			}
 			// Selected a Profile
 			if(fieldName == 'Profile'){
