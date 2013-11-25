@@ -3,7 +3,7 @@
 Library                 Selenium2Library  timeout=10  implicit_wait=0.2
 Resource                keywords.txt
 Suite Setup             Start browser
-# Suite Teardown          Close All Browsers
+Suite Teardown          Close All Browsers
 
 *** Variables ***
 
@@ -52,7 +52,7 @@ Test AR specs UI
     Input text                          css=[selector='Result_Ca']      4
     Press Key                           css=[selector='Result_Ca']      \t
     Page Should not contain element     css=[title*='Result out of range']
-    Input text                          css=[selector='Result_Cu']      12
+    Input text                          css=[selector='Result_Cu']      13
     Press Key                           css=[selector='Result_Cu']      \t
     Page Should contain element         css=[title='Result out of range (min 9, max 11)']
     Input text                          css=[selector='Result_Cu']      10
